@@ -85,6 +85,7 @@ catImage.setAttribute("src", catUrl);
         let commentDiv = document.createElement("div");
         commentDiv.setAttribute("id", "commentDiv")
         let unOrderedList = document.createElement("ul");
+        unOrderedList.setAttribute("id", "unordered")
         commentDiv.appendChild(unOrderedList)
         box.appendChild(commentDiv)
 
@@ -95,7 +96,7 @@ catImage.setAttribute("src", catUrl);
             let newCat = await fetch("https://api.thecatapi.com/v1/images/search")
             const jsonRes = await newCat.json();
             catImage.setAttribute("src", jsonRes[0].url);
-
+            document.querySelector("#unordered").innerText = ""
         } );
 
         upButton.addEventListener("click", () => {
@@ -108,11 +109,13 @@ catImage.setAttribute("src", catUrl);
             popularityCounterDiv.innerText = `Popularity Score: ${counter}`;
         })
 
-        submitForm.addEventListener("click", () => {
-
+        submitForm.addEventListener("click", (e) => {
+            e.preventDefault();
+            const liList = document.createElement("li");
+            liList.innerText = document.querySelector("#Comment").value
+    document.querySelector("#unordered").appendChild(liList) 
+           document.querySelector("#Comment").value = ""
         })
-
-
 
 }
 
