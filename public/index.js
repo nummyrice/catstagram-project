@@ -11,7 +11,7 @@ window.onload = async() => {
         return ans[0].url;
     })
     .catch(e => console.log(e))
-    
+
 catImage = document.createElement("img");
 catImage.setAttribute("src", catUrl);
 
@@ -26,14 +26,14 @@ catImage.setAttribute("src", catUrl);
         box.setAttribute("id", "mainBox")
         document.body.appendChild(box);
 
-  
-    
+
+
         //creates new div in the box div that the image is in for popularity score
         let popularityCounterDiv = document.createElement("div");
         popularityCounterDiv.setAttribute("class", "popularity");
         popularityCounterDiv.innerText = `Popularity Score: ${counter}`;
         box.appendChild(popularityCounterDiv);
-        
+
         const buttonDiv = document.createElement("div")
         buttonDiv.setAttribute("id", "popularity-buttons")
         box.appendChild(buttonDiv)
@@ -53,7 +53,8 @@ catImage.setAttribute("src", catUrl);
         newCatbuttonDiv.appendChild(newCatButton);
         box.appendChild(newCatbuttonDiv);
 
-        let form = document.createElement("form")
+        //setting up the form for submitting comments
+        let form = document.createElement("form");
         form.setAttribute("id", "myForm");
         const commentSubmitDiv = document.createElement("div");
         form.appendChild(commentSubmitDiv)
@@ -63,14 +64,21 @@ catImage.setAttribute("src", catUrl);
         inputComment.setAttribute("type", "text");
         labelComment.setAttribute("for", "Comment")
         inputComment.placeholder ="Add a comment"
-        
+
+
+
+
         labelComment.innerText = "Comment:"
 
         commentSubmitDiv.appendChild(labelComment);
         commentSubmitDiv.appendChild(inputComment);
         let submitForm = document.createElement("button");
+        submitForm.setAttribute("id", "commentSubmit");
         submitForm.innerText = "Submit"
         commentSubmitDiv.appendChild(submitForm)
+
+        // initiate form object
+        // const kittyComments = new FormData
 
         box.appendChild(form)
 
@@ -79,6 +87,33 @@ catImage.setAttribute("src", catUrl);
         let unOrderedList = document.createElement("ul");
         commentDiv.appendChild(unOrderedList)
         box.appendChild(commentDiv)
+
+        //listeners
+        newCatButton.addEventListener("click", async () => {
+            counter = 0;
+            popularityCounterDiv.innerText = `Popularity Score: ${counter}`;
+            let newCat = await fetch("https://api.thecatapi.com/v1/images/search")
+            const jsonRes = await newCat.json();
+            catImage.setAttribute("src", jsonRes[0].url);
+
+        } );
+
+        upButton.addEventListener("click", () => {
+            counter++;
+            popularityCounterDiv.innerText = `Popularity Score: ${counter}`;
+        })
+
+        downButton.addEventListener("click", () => {
+            counter--;
+            popularityCounterDiv.innerText = `Popularity Score: ${counter}`;
+        })
+
+        submitForm.addEventListener("click", () => {
+
+        })
+
+
+
 }
 
 // window.addEventListener("DOMContentLoaded", () => {
