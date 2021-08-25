@@ -1,17 +1,33 @@
 let catImage;
 let counter = 0;
-window.onload = () => {
+
+
+window.onload = async() => {
     //interacts with API and gets random cat image
-    fetch("https://api.thecatapi.com/v1/images/search", {"method": "GET", "header": {"x-api-key": "cc6decfa-0715-4d20-8982-75fc3d73f806"}})
+    const catUrl = await fetch("https://api.thecatapi.com/v1/images/search", {"method": "GET", "header": {"x-api-key": "cc6decfa-0715-4d20-8982-75fc3d73f806"}})
     .then(res => res.json())
     .then(ans => {
         //creates image element using the retrieved image url
-        catImage = document.createElement("img");
-        catImage.setAttribute("src", ans[0].url);
-        box.appendChild(catImage);
+        return ans[0].url;
+    })
+    .catch(e => console.log(e))
+    
+catImage = document.createElement("img");
+catImage.setAttribute("src", catUrl);
+
+ let box = document.createElement("div");
+  let title = document.createElement("h1");
+    title.innerText = "KittyGraham";
+    title.setAttribute("class", "title");
+    box.appendChild(title);
+
+ box.appendChild(catImage);
         catImage.className = "catImage";
         box.setAttribute("id", "mainBox")
         document.body.appendChild(box);
+
+  
+    
         //creates new div in the box div that the image is in for popularity score
         let popularityCounterDiv = document.createElement("div");
         popularityCounterDiv.setAttribute("class", "popularity");
@@ -30,19 +46,39 @@ window.onload = () => {
         buttonDiv.appendChild(upButton)
         buttonDiv.appendChild(downButton)
 
-    })
-    .catch(e => console.log(e))
-    let box = document.createElement("div");
+        const newCatbuttonDiv = document.createElement("div");
+        newCatbuttonDiv.setAttribute("id", "newCat-button");
+        const newCatButton = document.createElement("button");
+        newCatButton.innerText = "Next Kitty";
+        newCatbuttonDiv.appendChild(newCatButton);
+        box.appendChild(newCatbuttonDiv);
 
-    let title = document.createElement("h1");
-    title.innerText = "KittyGraham";
-    title.setAttribute("class", "title");
-    box.appendChild(title);
+        let form = document.createElement("form")
+        form.setAttribute("id", "myForm");
+        const commentSubmitDiv = document.createElement("div");
+        form.appendChild(commentSubmitDiv)
+        let labelComment = document.createElement("label")
+        let inputComment = document.createElement("input");
+        inputComment.setAttribute("id", "Comment")
+        inputComment.setAttribute("type", "text");
+        labelComment.setAttribute("for", "Comment")
+        inputComment.placeholder ="Add a comment"
+        
+        labelComment.innerText = "Comment:"
 
-    let popularityScore = 0;
+        commentSubmitDiv.appendChild(labelComment);
+        commentSubmitDiv.appendChild(inputComment);
+        let submitForm = document.createElement("button");
+        submitForm.innerText = "Submit"
+        commentSubmitDiv.appendChild(submitForm)
 
+        box.appendChild(form)
 
-
+        let commentDiv = document.createElement("div");
+        commentDiv.setAttribute("id", "commentDiv")
+        let unOrderedList = document.createElement("ul");
+        commentDiv.appendChild(unOrderedList)
+        box.appendChild(commentDiv)
 }
 
 // window.addEventListener("DOMContentLoaded", () => {

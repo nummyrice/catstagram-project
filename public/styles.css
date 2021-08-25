@@ -14,6 +14,15 @@ body img {
     position: relative;
     left: 20%;
 } */
+.catImage {
+    border: 10px solid white;
+}
+
+body {
+    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%)
+         
+}
+
 .title {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: italic;
@@ -34,7 +43,40 @@ body img {
     height: 500px;
 
 }
-
 /* .popularity {
     background:
 } */
+.popularity {
+    display: block;
+    margin: 0 auto;
+    padding: 20px;
+
+}
+
+#popularity-buttons {
+     display: block;
+    margin: 0 auto;
+}
+
+#up-button, #down-button {
+padding: 5px;
+margin: 5px;
+}
+
+
+#newCat-button {
+    display: block;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+#commentDiv {
+    border: 1px solid black;
+    padding: 30px;
+}
+
+#myForm {
+     display: block;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
