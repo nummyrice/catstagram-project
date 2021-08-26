@@ -12,15 +12,25 @@ window.onload = async() => {
         return ans[0].url;
     })
     .catch(e => console.log(e))
-catImage = document.createElement("img");
-catImage.setAttribute("src", catUrl);
-if(window.localStorage.getItem("catImg")){
-    restoreCatImg();
-} else{
-catImage = document.createElement("img");
-catImage.setAttribute("src", catUrl);
-}
-window.localStorage.setItem("catImg", catUrl);
+
+    catImage = document.createElement("img");
+    // sets cat image to that of local storage
+    function restoreCatImg(){
+        const catImgUrl = window.localStorage.getItem("catImage");
+        if(catImgUrl){
+            catImage.setAttribute("src", catImgUrl);
+        }
+    }
+
+    // check if url already exists in local storage and set catImage atribute to that url
+    if (window.localStorage.getItem("catImg")) {
+      restoreCatImg();
+    } else {
+      catImage.setAttribute("src", catUrl);
+      window.localStorage.setItem("catImg", catUrl);
+    }
+
+
 
 
  let box = document.createElement("div");
@@ -105,16 +115,9 @@ window.localStorage.setItem("catImg", catUrl);
             const jsonRes = await newCat.json();
             catImage.setAttribute("src", jsonRes[0].url);
             document.querySelector("#unordered").innerText = ""
-           window.localStorage.clear()
-            window.localStorage.setItem("catImg", newCat);
+            window.localStorage.clear()
+            window.localStorage.setItem("catImg", jsonRes[0].url);
         } );
-
-        function restoreCatImg(){
-            const catImgUrl = window.localStorage.getItem(catImage);
-            if(catImgUrl){
-                catImage.setAttribute("src", catImgUrl);
-            }
-        }
 
         upButton.addEventListener("click", () => {
             counter++;
@@ -166,10 +169,6 @@ window.localStorage.setItem("catImg", catUrl);
             document.querySelector("#unordered").appendChild(liList);
           }
         }
-
+        // invoke restoreComments on load to pull comments from local storage
         restoreComments();
-
-    //   function restoreImg(){
-
-    //   }
 }
