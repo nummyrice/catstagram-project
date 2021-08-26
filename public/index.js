@@ -12,9 +12,16 @@ window.onload = async() => {
         return ans[0].url;
     })
     .catch(e => console.log(e))
-
 catImage = document.createElement("img");
 catImage.setAttribute("src", catUrl);
+if(window.localStorage.getItem("catImg")){
+    restoreCatImg();
+} else{
+catImage = document.createElement("img");
+catImage.setAttribute("src", catUrl);
+}
+window.localStorage.setItem("catImg", catUrl);
+
 
  let box = document.createElement("div");
   let title = document.createElement("h1");
@@ -98,8 +105,16 @@ catImage.setAttribute("src", catUrl);
             const jsonRes = await newCat.json();
             catImage.setAttribute("src", jsonRes[0].url);
             document.querySelector("#unordered").innerText = ""
-            commentCounter = 1;
+           window.localStorage.clear()
+            window.localStorage.setItem("catImg", newCat);
         } );
+
+        function restoreCatImg(){
+            const catImgUrl = window.localStorage.getItem(catImage);
+            if(catImgUrl){
+                catImage.setAttribute("src", catImgUrl);
+            }
+        }
 
         upButton.addEventListener("click", () => {
             counter++;
@@ -135,7 +150,7 @@ catImage.setAttribute("src", catUrl);
             // updating the commentCounter in local storage
             window.localStorage.setItem("commentCounter", commentCounter + "");
 
-
+        document.querySelector("#Comment").value = "";
         }
       // listener for comment submit button
         submitForm.addEventListener("click", createComments)
