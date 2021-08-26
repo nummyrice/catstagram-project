@@ -25,14 +25,13 @@ window.onload = async() => {
 
     // check if url already exists in local storage and set catImage atribute to that url
     if (window.localStorage.getItem("catImg")) {
-
       restoreCatImg();
     } else {
       catImage.setAttribute("src", catUrl);
       window.localStorage.setItem("catImg", catUrl);
     }
 
- let box = document.createElement("div");
+    let box = document.createElement("div");
   let title = document.createElement("h1");
     title.innerText = "KittyGraham";
     title.setAttribute("class", "title");
