@@ -109,20 +109,42 @@ catImage.setAttribute("src", catUrl);
             popularityCounterDiv.innerText = `Popularity Score: ${counter}`;
         })
 
-        submitForm.addEventListener("click", (e) => {
-            e.preventDefault();
+        function createComments(e){
+            e.preventDefault()
             const liList = document.createElement("li");
             liList.innerText = document.querySelector("#Comment").value
     document.querySelector("#unordered").appendChild(liList) 
-           document.querySelector("#Comment").value = ""
-            
-           window.localStorage.setItem(
-             "comments",
-             document.querySelector("#Comment").value
-           );
-        })
-        //when 
-        //need comments in array
+        //    document.querySelector("#Comment").value = ""
 
+ console.log(window.localStorage.getItem("comments"));
+ if (!window.localStorage.getItem('comments')) {
+    
+                window.localStorage.setItem("comments", [])
+           }
+          window.localStorage
+                  .getItem("comments")
+                  .push(document.querySelector("#Comment").value);
+        }
+
+        submitForm.addEventListener("click", createComments)
+
+    function restoreComments(){
+        const setComments = window.localStorage.getItem("comments");
+        //if there are comments in local storage
+        if(setComments){
+            //restore them (show them)
+            for (let i = 0; i < setComments.length; i++) {
+              const liList = document.createElement("li");
+             liList.innerText = setComments[i];
+             document.querySelector("#unordered").appendChild(liList);
+            }
+          
+        }
+    }
+    restoreComments();
+    //   function restoreImg(){
+
+    //   }
 }
+
 
