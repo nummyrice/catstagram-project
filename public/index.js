@@ -2,6 +2,7 @@ let catImage;
 let counter = 0;
 
 
+
 window.onload = async() => {
     //interacts with API and gets random cat image
     const catUrl = await fetch("https://api.thecatapi.com/v1/images/search", {"method": "GET", "header": {"x-api-key": "cc6decfa-0715-4d20-8982-75fc3d73f806"}})
@@ -97,6 +98,7 @@ catImage.setAttribute("src", catUrl);
             const jsonRes = await newCat.json();
             catImage.setAttribute("src", jsonRes[0].url);
             document.querySelector("#unordered").innerText = ""
+            commentCounter = 1;
         } );
 
         upButton.addEventListener("click", () => {
@@ -109,42 +111,50 @@ catImage.setAttribute("src", catUrl);
             popularityCounterDiv.innerText = `Popularity Score: ${counter}`;
         })
 
+        // add a comment to page and local storage
         function createComments(e){
             e.preventDefault()
             const liList = document.createElement("li");
             liList.innerText = document.querySelector("#Comment").value
-    document.querySelector("#unordered").appendChild(liList) 
-        //    document.querySelector("#Comment").value = ""
+            document.querySelector("#unordered").appendChild(liList)
 
- console.log(window.localStorage.getItem("comments"));
- if (!window.localStorage.getItem('comments')) {
-    
-                window.localStorage.setItem("comments", [])
-           }
-          window.localStorage
-                  .getItem("comments")
-                  .push(document.querySelector("#Comment").value);
+            // set counter in local storage for total comments added
+            let commentCounter = window.localStorage.getItem("commentCounter")
+
+            // check if there are comments
+            if (!commentCounter) {
+                // set commentCounter in local Storage
+                window.localStorage.setItem("commentCounter", "0")
+            }
+            // set new item string to local storage using the comment counter
+            commentCounter = parseInt(window.localStorage.getItem("commentCounter"));
+            commentCounter++;
+
+            window.localStorage.setItem(`comment${commentCounter}`, document.querySelector("#Comment").value);
+
+            // updating the commentCounter in local storage
+            window.localStorage.setItem("commentCounter", commentCounter + "");
+
+
         }
-
+      // listener for comment submit button
         submitForm.addEventListener("click", createComments)
 
-    function restoreComments(){
-        const setComments = window.localStorage.getItem("comments");
-        //if there are comments in local storage
-        if(setComments){
-            //restore them (show them)
-            for (let i = 0; i < setComments.length; i++) {
-              const liList = document.createElement("li");
-             liList.innerText = setComments[i];
-             document.querySelector("#unordered").appendChild(liList);
-            }
-          
+      //on page load, accesses local storage and repopulates page with comments
+        function restoreComments(){
+          const commentCounter = window.localStorage.getItem("commentCounter");
+          for (let i = 1; i <= commentCounter; i++) {
+            const storedComment = window.localStorage.getItem(`comment${i}`);
+            console.log(storedComment);
+            const liList = document.createElement("li");
+            liList.innerText = storedComment;
+            document.querySelector("#unordered").appendChild(liList);
+          }
         }
-    }
-    restoreComments();
+
+        restoreComments();
+
     //   function restoreImg(){
 
     //   }
 }
-
-
