@@ -12,16 +12,17 @@ window.onload = async() => {
         return ans[0].url;
     })
     .catch(e => console.log(e))
-catImage = document.createElement("img");
-catImage.setAttribute("src", catUrl);
-if(window.localStorage.getItem("catImg")){
-    restoreCatImg();
-} else{
-catImage = document.createElement("img");
-catImage.setAttribute("src", catUrl);
-}
-window.localStorage.setItem("catImg", catUrl);
 
+catImage = document.createElement("img");
+catImage.setAttribute("src", catUrl);
+// if(window.localStorage.getItem("catImg")){
+//     restoreCatImg();
+// } else{
+// catImage = document.createElement("img");
+// catImage.setAttribute("src", catUrl);
+// }
+// window.localStorage.setItem("catImg", catUrl);
+// restoreCatImg();
 
  let box = document.createElement("div");
   let title = document.createElement("h1");
@@ -110,9 +111,12 @@ window.localStorage.setItem("catImg", catUrl);
         } );
 
         function restoreCatImg(){
-            const catImgUrl = window.localStorage.getItem(catImage);
+            const catImgUrl = window.localStorage.getItem("catImg");
             if(catImgUrl){
-                catImage.setAttribute("src", catImgUrl);
+                // let cat = document.querySelector(".catImage")
+            //     cat.src = localStorage.getItem("catImg");
+                  catImage.setAttribute("src", catImgUrl);
+              // cat.setAttribute("src", catImgUrl);
             }
         }
 
