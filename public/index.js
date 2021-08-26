@@ -115,10 +115,14 @@ catImage.setAttribute("src", catUrl);
             liList.innerText = document.querySelector("#Comment").value
     document.querySelector("#unordered").appendChild(liList) 
            document.querySelector("#Comment").value = ""
+            
+           window.localStorage.setItem(
+             "comments",
+             document.querySelector("#Comment").value
+           );
         })
+        //when 
+        //need comments in array
 
 }
 
-// window.addEventListener("DOMContentLoaded", () => {
-
-// })
