@@ -14,9 +14,10 @@ window.onload = async() => {
     .catch(e => console.log(e))
 
     catImage = document.createElement("img");
+    catImage.className = "catImage";
     // sets cat image to that of local storage
     function restoreCatImg(){
-        const catImgUrl = window.localStorage.getItem("catImage");
+        const catImgUrl = window.localStorage.getItem("catImg");
         if(catImgUrl){
             catImage.setAttribute("src", catImgUrl);
         }
@@ -24,14 +25,12 @@ window.onload = async() => {
 
     // check if url already exists in local storage and set catImage atribute to that url
     if (window.localStorage.getItem("catImg")) {
+
       restoreCatImg();
     } else {
       catImage.setAttribute("src", catUrl);
       window.localStorage.setItem("catImg", catUrl);
     }
-
-
-
 
  let box = document.createElement("div");
   let title = document.createElement("h1");
@@ -40,7 +39,7 @@ window.onload = async() => {
     box.appendChild(title);
 
  box.appendChild(catImage);
-        catImage.className = "catImage";
+
         box.setAttribute("id", "mainBox")
         document.body.appendChild(box);
 
